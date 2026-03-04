@@ -107,9 +107,7 @@ Monitoring & Scaling
 })
 
 // Root route
-app.get("/",(req,res)=>{
-  res.sendFile(__dirname + "/index.html")
-})
+
 
 // Start server
 const PORT = process.env.PORT || 5000
