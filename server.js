@@ -6,10 +6,8 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-// serve static files
 app.use(express.static(__dirname))
 
-// telegram config
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN
 const CHAT_ID = process.env.CHAT_ID
 
@@ -30,7 +28,6 @@ text: message
 
 }
 
-// roadmap API
 app.post("/generate", async (req,res)=>{
 
 const idea = req.body.idea
@@ -60,7 +57,6 @@ CI/CD Pipeline
 Monitoring & Scaling
 `
 
-// telegram notification
 await sendTelegram(`🚀 New Lead Generated
 
 Idea:

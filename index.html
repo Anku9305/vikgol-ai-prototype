@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+
 <title>Vikgol AI Architect</title>
 
 <style>
 
 body{
 font-family: Arial;
+background:#f3f4f6;
 padding:40px;
-background:#f4f6fb;
 }
 
 .container{
@@ -18,7 +18,16 @@ margin:auto;
 background:white;
 padding:30px;
 border-radius:10px;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
+box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+.logo{
+text-align:center;
+margin-bottom:20px;
+}
+
+.logo img{
+width:180px;
 }
 
 textarea{
@@ -28,19 +37,19 @@ padding:10px;
 font-size:16px;
 }
 
-button{
+.generate-btn{
+margin-top:15px;
 padding:12px 25px;
 background:#2563eb;
 color:white;
 border:none;
 border-radius:6px;
-font-size:16px;
 cursor:pointer;
-margin-top:15px;
+font-size:16px;
 }
 
-button:hover{
-background:#1e40af;
+.generate-btn:hover{
+background:#1d4ed8;
 }
 
 #result{
@@ -49,22 +58,22 @@ white-space:pre-line;
 font-family:monospace;
 }
 
-.consult-btn{
-display:inline-block;
+.consult{
 margin-top:25px;
-padding:12px 20px;
+display:inline-block;
 background:#16a34a;
 color:white;
-text-decoration:none;
+padding:12px 20px;
 border-radius:6px;
+text-decoration:none;
 }
 
 .watermark{
 position:fixed;
 bottom:20px;
 right:20px;
-opacity:0.3;
-font-size:20px;
+font-size:18px;
+opacity:0.25;
 }
 
 </style>
@@ -75,7 +84,11 @@ font-size:20px;
 
 <div class="container">
 
-<h1>AI Solution Architect</h1>
+<div class="logo">
+<img src="vikgol-logo.png">
+</div>
+
+<h2>AI Solution Architect</h2>
 
 <h3>Describe your product idea</h3>
 
@@ -83,12 +96,18 @@ font-size:20px;
 
 <br>
 
-<button onclick="generate()">Generate Roadmap</button>
+<button class="generate-btn" onclick="generate()">
+Generate Roadmap
+</button>
 
 <div id="result"></div>
 
-<a class="consult-btn" href="https://wa.me/919940526611" target="_blank">
+<a class="consult"
+href="https://wa.me/919940526611"
+target="_blank">
+
 Validate this Architecture with a Vikgol Senior Partner
+
 </a>
 
 </div>
@@ -120,5 +139,4 @@ document.getElementById("result").innerText=data.roadmap
 </script>
 
 </body>
-
 </html>
