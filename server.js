@@ -7,19 +7,20 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-// Serve static files
+// Serve static files (index.html, logo, etc)
 app.use(express.static(__dirname))
 
-// OpenAI API
+// OpenAI setup
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
 
 // Telegram configuration
-const TELEGRAM_TOKEN = "YOUR_TELEGRAM_TOKEN"
-const CHAT_ID = "YOUR_CHAT_ID"
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN
+const CHAT_ID = process.env.CHAT_ID
 
-// Telegram Notification Function
+
+// Telegram notification function
 async function sendTelegram(message){
 
   const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`
@@ -37,6 +38,7 @@ async function sendTelegram(message){
 
 }
 
+
 // Generate Roadmap API
 app.post("/generate", async (req,res)=>{
 
@@ -53,14 +55,24 @@ app.post("/generate", async (req,res)=>{
         model:"gpt-4.1-mini",
 
         messages:[
+
           {
             role:"system",
-            content:"You are the Lead Solution Architect at Vikgol. Generate a structured 12-week roadmap with phases, stack and risks."
+            content:`You are the Lead Solution Architect at Vikgol.
+
+Generate a structured 12-week roadmap including:
+
+Phase-wise Milestones
+The Vikgol Stack (Next.js, FastAPI, PostgreSQL, Vector DB, LangGraph, AWS)
+Architecture Thinking
+Technical Risks to Mitigate`
           },
+
           {
             role:"user",
             content:idea
           }
+
         ]
 
       })
@@ -72,27 +84,38 @@ app.post("/generate", async (req,res)=>{
       console.log("OPENAI ERROR:", err)
 
       roadmap = `
-Phase 1 - Architecture Planning
+Phase 1 (Weeks 1-3)
+Architecture Planning
 Backend Setup
 Database Schema Design
 
-Phase 2 - API Development
+Phase 2 (Weeks 4-6)
+API Development
 Core Business Logic
 Performance Monitoring
 
-Phase 3 - AI Integration
+Phase 3 (Weeks 7-9)
+AI Agent Integration
 Testing & Optimization
 
-Phase 4 - Deployment
+Phase 4 (Weeks 10-12)
+AWS Deployment
 CI/CD Pipeline
 Monitoring & Scaling
 `
 
     }
 
-    await sendTelegram(`New Lead Generated\n\nIdea:\n${idea}\n\nRoadmap:\n${roadmap}`)
+    // Send Telegram notification
+    await sendTelegram(`🚀 New Lead Generated
 
-    res.json({roadmap})
+Idea:
+${idea}
+
+Roadmap:
+${roadmap}`)
+
+    res.json({ roadmap })
 
   }catch(error){
 
@@ -106,7 +129,11 @@ Monitoring & Scaling
 
 })
 
-// Root route
+
+// Root route → serve UI
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html")
+})
 
 
 // Start server
