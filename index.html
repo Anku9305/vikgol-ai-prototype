@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Vikgol AI Architect</title>
+</head>
+
+<body style="font-family:Arial;padding:40px;background:#f5f7fb;">
+
+<div style="text-align:center;margin-bottom:30px;">
+<img src="vikgol-logo.png" width="200">
+<h2>AI Solution Architect</h2>
+</div>
+
+<h3>Describe your product idea</h3>
+
+<textarea id="idea"
+rows="6"
+cols="60"
+style="width:600px;padding:12px;border-radius:8px;border:1px solid #ccc;font-size:14px;"
+placeholder="Example: Build a logistics AI platform"></textarea>
+
+<br><br>
+
+<button onclick="generate()"
+style="padding:12px 24px;font-size:16px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;">
+Generate Roadmap
+</button>
+
+<br><br>
+
+<pre id="result"
+style="background:white;padding:20px;border-radius:10px;border:1px solid #ddd;width:600px;"></pre>
+
+
+<br><br>
+
+<a href="https://wa.me/919940526611" target="_blank">
+<button style="
+padding:12px 20px;
+font-size:14px;
+background:#16a34a;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;">
+Validate this Architecture with a Vikgol Senior Partner
+</button>
+</a>
+
+
+<script>
+
+async function generate(){
+
+const idea=document.getElementById("idea").value
+
+const res=await fetch("http://localhost:5000/generate",{
+method:"POST",
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({idea})
+})
+
+const data=await res.json()
+
+document.getElementById("result").innerText=data.roadmap
+
+}
+
+</script>
+
+
+<div style="
+position:fixed;
+bottom:20px;
+right:20px;
+opacity:0.25;
+font-size:22px;
+font-weight:bold;
+">
+Confidential Architectural Draft
+</div>
+
+</body>
+
+</html>
