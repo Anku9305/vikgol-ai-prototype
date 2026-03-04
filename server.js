@@ -7,6 +7,12 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+app.use(express.static(__dirname))
+
+app.get("/",(req, res) => {
+  res.send("Vikgol AI Architect Server Running")
+})
+
 // OpenAI API
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
