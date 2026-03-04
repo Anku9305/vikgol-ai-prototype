@@ -7,11 +7,8 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+// Serve static files
 app.use(express.static(__dirname))
-
-app.get("/",(req, res) => {
-  res.send("Vikgol AI Architect Server Running")
-})
 
 // OpenAI API
 const client = new OpenAI({
@@ -19,9 +16,8 @@ const client = new OpenAI({
 })
 
 // Telegram configuration
-const TELEGRAM_TOKEN = "8584559764:AAG08fLaosLjQidPXuVj6an9HxjLavJhb44"
-const CHAT_ID = "1987668591"
-
+const TELEGRAM_TOKEN = "YOUR_TELEGRAM_TOKEN"
+const CHAT_ID = "YOUR_CHAT_ID"
 
 // Telegram Notification Function
 async function sendTelegram(message){
@@ -41,7 +37,6 @@ async function sendTelegram(message){
 
 }
 
-
 // Generate Roadmap API
 app.post("/generate", async (req,res)=>{
 
@@ -58,48 +53,14 @@ app.post("/generate", async (req,res)=>{
         model:"gpt-4.1-mini",
 
         messages:[
-
           {
             role:"system",
-            content:`You are the Lead Solution Architect at Vikgol.
-
-When a user provides a product idea, generate a structured 12-week execution roadmap.
-
-Include the following sections:
-
-Phase-wise Milestones:
-Use specific milestones such as Security Hardening, Latency Optimization, Production Monitoring, CI/CD Automation and Performance Testing.
-
-The Vikgol Stack:
-Recommend modern technologies including:
-Next.js
-FastAPI
-PostgreSQL
-Vector Databases (Pinecone or Milvus)
-LangGraph for multi-agent workflows
-AWS infrastructure.
-
-Architecture Thinking:
-Explain briefly how AI agents interact with APIs, vector databases and backend services.
-
-Technical Risks to Mitigate:
-Add a section titled "Technical Risks to Mitigate".
-Mention risks such as Token Costs, Data Privacy, API Rate Limiting and scaling challenges.
-
-If the idea involves logistics, delivery or mobility systems, ensure the roadmap explicitly includes:
-
-Route Optimization
-Real-time API Latency
-Fleet Management Logic
-
-Tone should be consultative, analytical and slightly critical of basic implementations.`
+            content:"You are the Lead Solution Architect at Vikgol. Generate a structured 12-week roadmap with phases, stack and risks."
           },
-
           {
             role:"user",
             content:idea
           }
-
         ]
 
       })
@@ -109,44 +70,27 @@ Tone should be consultative, analytical and slightly critical of basic implement
     }catch(err){
 
       console.log("OPENAI ERROR:", err)
-      console.log("OpenAI failed, using fallback roadmap")
 
-    roadmap = `
-Phase 1- System Architecture & Data Modeling
-(Weeks 1-3)
-Architecture Planning
+      roadmap = `
+Phase 1 - Architecture Planning
 Backend Setup
 Database Schema Design
 
-Phase 2- Fleet Management APIs
-(Weeks 4-6)
-API Development
+Phase 2 - API Development
 Core Business Logic
 Performance Monitoring
 
-Phase 3- Route Optimization Engine
-(Weeks 7-9)
-AI Agent Integration
+Phase 3 - AI Integration
 Testing & Optimization
 
-Phase 4-AWS Deployment & Monitoring
-(Weeks 10-12)
-AWS Deployment
+Phase 4 - Deployment
 CI/CD Pipeline
 Monitoring & Scaling
 `
+
     }
 
-
-    // Send Telegram Notification
-    await sendTelegram(`🚀 New Lead Generated
-
-Idea:
-${idea}
-
-Roadmap:
-${roadmap}`)
-
+    await sendTelegram(`New Lead Generated\n\nIdea:\n${idea}\n\nRoadmap:\n${roadmap}`)
 
     res.json({roadmap})
 
@@ -162,16 +106,14 @@ ${roadmap}`)
 
 })
 
-
-// Health check route
+// Root route
 app.get("/",(req,res)=>{
-  res.send("Vikgol AI Architect Server Running")
+  res.sendFile(__dirname + "/index.html")
 })
 
-
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+  console.log("Server running on port " + PORT)
 })
