@@ -84,21 +84,25 @@ Technical Risks to Mitigate`
       console.log("OPENAI ERROR:", err)
 
       roadmap = `
-Phase 1 (Weeks 1-3)
+Phase 1- System Architecture & Data Modeling
+(Weeks 1-3)
 Architecture Planning
 Backend Setup
 Database Schema Design
 
-Phase 2 (Weeks 4-6)
+Phase 2- Fleet Management APIs
+(Weeks 4-6)
 API Development
 Core Business Logic
 Performance Monitoring
 
-Phase 3 (Weeks 7-9)
+Phase 3- Route Optimization Engine
+(Weeks 7-9)
 AI Agent Integration
 Testing & Optimization
 
-Phase 4 (Weeks 10-12)
+Phase 4-AWS Deployment & Monitoring
+(Weeks 10-12)
 AWS Deployment
 CI/CD Pipeline
 Monitoring & Scaling
