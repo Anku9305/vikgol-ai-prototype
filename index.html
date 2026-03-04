@@ -1,79 +1,124 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <title>Vikgol AI Architect</title>
+
+<style>
+
+body{
+font-family: Arial;
+padding:40px;
+background:#f4f6fb;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+textarea{
+width:100%;
+height:120px;
+padding:10px;
+font-size:16px;
+}
+
+button{
+padding:12px 25px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+margin-top:15px;
+}
+
+button:hover{
+background:#1e40af;
+}
+
+#result{
+margin-top:30px;
+white-space:pre-line;
+font-family:monospace;
+}
+
+.consult-btn{
+display:inline-block;
+margin-top:25px;
+padding:12px 20px;
+background:#16a34a;
+color:white;
+text-decoration:none;
+border-radius:6px;
+}
+
+.watermark{
+position:fixed;
+bottom:20px;
+right:20px;
+opacity:0.3;
+font-size:20px;
+}
+
+</style>
+
 </head>
 
-<body style="font-family:Arial; margin:40px;">
+<body>
 
-<center>
-<img src="vikgol-logo.png" width="200">
+<div class="container">
+
 <h1>AI Solution Architect</h1>
-</center>
 
 <h3>Describe your product idea</h3>
 
-<textarea id="idea" rows="6" cols="60"
-placeholder="Example: Build a logistics AI platform"></textarea>
+<textarea id="idea" placeholder="Example: Build AI logistics platform"></textarea>
 
-<br><br>
+<br>
 
-<button onclick="generate()"
-style="padding:10px 20px;font-size:16px;">
-Generate Roadmap
-</button>
+<button onclick="generate()">Generate Roadmap</button>
 
-<br><br>
+<div id="result"></div>
 
-<pre id="result"></pre>
-
-<br><br>
-
-<a href="https://wa.me/919940526611" target="_blank">
-<button style="
-padding:12px 20px;
-font-size:14px;
-background:#16a34a;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;">
+<a class="consult-btn" href="https://wa.me/919940526611" target="_blank">
 Validate this Architecture with a Vikgol Senior Partner
-</button>
 </a>
+
+</div>
+
+<div class="watermark">
+Confidential Architectural Draft
+</div>
 
 <script>
 
 async function generate(){
 
-const idea = document.getElementById("idea").value;
+const idea=document.getElementById("idea").value
 
-const response = await fetch("/generate",{
+const res=await fetch("/generate",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
 },
-body:JSON.stringify({ idea: idea })
-});
+body:JSON.stringify({idea})
+})
 
-const data = await response.json();
+const data=await res.json()
 
-document.getElementById("result").innerText = data.roadmap;
+document.getElementById("result").innerText=data.roadmap
 
 }
 
 </script>
 
-
-<div style="
-position:fixed;
-bottom:20px;
-right:20px;
-opacity:0.25;
-font-size:22px;
-font-weight:bold;">
-Confidential Architectural Draft
-</div>
-
 </body>
+
 </html>
