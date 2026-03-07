@@ -37,6 +37,12 @@ padding:10px;
 font-size:16px;
 }
 
+input, select{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+
 .generate-btn{
 margin-top:15px;
 padding:12px 25px;
@@ -94,6 +100,18 @@ opacity:0.25;
 
 <textarea id="idea" placeholder="Example: Build AI logistics platform"></textarea>
 
+<input id="email" type="email" placeholder="Your Email">
+
+<select id="industry">
+<option value="">Select Industry</option>
+<option value="Fintech">Fintech</option>
+<option value="Logistics">Logistics</option>
+<option value="SaaS">SaaS</option>
+<option value="Healthcare">Healthcare</option>
+<option value="E-commerce">E-commerce</option>
+<option value="AI Tools">AI Tools</option>
+</select>
+
 <br>
 
 <button class="generate-btn" onclick="generate()">
@@ -105,9 +123,7 @@ Generate Roadmap
 <a class="consult"
 href="https://wa.me/919940526611"
 target="_blank">
-
 Validate this Architecture with a Vikgol Senior Partner
-
 </a>
 
 </div>
@@ -121,13 +137,19 @@ Confidential Architectural Draft
 async function generate(){
 
 const idea=document.getElementById("idea").value
+const email=document.getElementById("email").value
+const industry=document.getElementById("industry").value
 
 const res=await fetch("/generate",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
 },
-body:JSON.stringify({idea})
+body:JSON.stringify({
+idea: idea,
+email: email,
+industry: industry
+})
 })
 
 const data=await res.json()
